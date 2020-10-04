@@ -29,9 +29,5 @@ module.exports = {
   },
   api: {
     prefix: "/api"
-  },
-  emails: {
-    apiKey: "API key from mailgun",
-    domain: "Domain Name from mailgun"
   }
 };

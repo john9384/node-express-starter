@@ -21,11 +21,3 @@ app.use(helmet());
 app.set("trust proxy", 1);
 
 module.exports = app;
-
-// /**
-//  * User
-//  *
-//  * @param {String} path user's load path
-//  * @return {User} `User` instance
-//  * @api public
-//  */

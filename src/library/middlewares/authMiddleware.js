@@ -1,9 +1,9 @@
-const { FailResponse } = require("../helpers/responseHelpers");
+const { sendResponse } = require("../helpers/responseHelpers");
 const logger = require("../helpers/loggerHelpers");
 const config = require("../../config");
 const jwtHelpers = require("../helpers/jwtHelpers");
-
-const userServices = require("../../components").user;
+const { UNAUTHORIZED, INTERNAL_SERVER_ERROR } = require("http-status-codes");
+const userServices = require("../../components/users/users.service");
 
 exports.getAuthorize = async (req, res, next) => {
   // Check header or url parameters or post parameters for token
@@ -16,13 +16,14 @@ exports.getAuthorize = async (req, res, next) => {
   // Check exist token
   if (!headerAuthorize) {
     logger.warn("Header Authorize Not Found");
-    return res.json(
-      new FailResponse.Builder()
-        .withMessage("Header Authorize Not Found")
-        .build()
+    return res.status(UNAUTHORIZED).send(
+      sendResponse({
+        success: false,
+        content: {},
+        message: "Header Authorize Not Found"
+      })
     );
   }
-
   // Get token
   const token = headerAuthorize.replace(config.tokenType, "").trim();
 
@@ -32,17 +33,19 @@ exports.getAuthorize = async (req, res, next) => {
     const decoded = await jwtHelpers.decode(token, config.jwtSecret);
     // Save decoded to request
     req.decoded = decoded;
+
     // Save user current to request
-    const email = decoded.payload.email;
+    const email = decoded.email;
     req.currentUser = await userServices.findUserByEmail(email);
     return next();
   } catch (err) {
     logger.error(`Token Decode Error ${err}`);
-    return res.status(401).json(
-      new FailResponse.Builder()
-        .withContent(err.name)
-        .withMessage(err.message)
-        .build()
+    return res.status(INTERNAL_SERVER_ERROR).send(
+      sendResponse({
+        success: false,
+        content: err,
+        message: "Token Decode Error"
+      })
     );
   }
 };

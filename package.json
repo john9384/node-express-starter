@@ -1,18 +1,18 @@
 {
-  "name": "shopstack-website-api",
+  "name": "node-express-starter-kit-2.0.0",
   "version": "1.0.0",
-  "description": "A platform like jiji where people can see listings for services or product on sale, or for let",
+  "description": "A Starter kit to build node api with a signup and login template",
   "main": "src/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node ./src/server.js",
-    "start:dev": "nodemon ./src/server.js"
+    "server": "nodemon ./src/server.js"
   },
   "keywords": [
     "nodejs",
     "mongodb"
   ],
-  "author": "hameed damee",
+  "author": "hameed damee & Damilola",
   "license": "MIT",
   "dependencies": {
     "axios": "^0.19.0",
@@ -25,16 +25,12 @@
     "express": "^4.16.2",
     "gravatar": "^1.8.0",
     "helmet": "^3.21.2",
-    "html-to-text": "^3.3.0",
     "http-status-codes": "^1.4.0",
     "jsonwebtoken": "^8.1.0",
     "juice": "^4.2.2",
     "md5": "^2.2.1",
     "mongoose": "^4.13.9",
     "morgan": "^1.9.1",
-    "nodemailer": "^4.4.1",
-    "nodemailer-sendgrid-transport": "^0.2.0",
-    "pug": "^2.0.3",
     "unirest": "^0.6.0",
     "validator": "^9.2.0",
     "winston": "^3.0.0-rc1"

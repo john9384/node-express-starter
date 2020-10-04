@@ -16,7 +16,7 @@ if (cluster.isMaster) {
     cluster.fork();
   }
 } else {
-  app.use("/user", userModule.routes);
+  app.use("/api/v2/user", userModule.routes);
 
   userModule.model;
   mongoose
@@ -28,6 +28,7 @@ if (cluster.isMaster) {
 
   app.listen(config.port, err => {
     if (err) {
+      console.log(config.dbURI);
       logger.error(err);
       process.exit(1);
       return;
@@ -42,7 +43,7 @@ if (cluster.isMaster) {
 
 // Cluster API has a variety of events.
 // Here we are creating a new process if a worker die.
-cluster.on("exit", function(worker) {
+cluster.on("exit", function (worker) {
   logger.info(`Worker ${worker.id} died'`);
   logger.info(`Staring a new one...`);
   cluster.fork();

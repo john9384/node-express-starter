@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
-
 const config = require("../../config");
 
 // let dbConnection = mongoose.createConnection(`${config.dbURI}BOX_MERCHANTS`);
@@ -8,37 +7,28 @@ mongoose.Promise = global.Promise;
 
 const userSchema = new mongoose.Schema(
   {
+    name: {
+      type: String,
+      trim: true
+    },
     email: {
       type: String,
       unique: true,
       lowercase: true,
       trim: true
     },
-    phoneNumber: {
-      type: String,
-      unique: true,
+    age: {
+      type: Number,
       trim: true
     },
     password: {
       type: String,
       trim: true
     },
-    firstName: {
-      type: String,
-      trim: true
-    },
-    lastName: {
-      type: String,
-      trim: true
-    },
     avatar: {
       type: String,
       trim: true
-    },
-    resetPassword: String,
-    resetPasswordToken: String,
-    resetPasswordExpires: Date,
-    enable: { type: Boolean, default: false }
+    }
   },
   {
     timestamps: true,
@@ -49,7 +39,7 @@ const userSchema = new mongoose.Schema(
   { collection: "users" }
 );
 
-userSchema.pre("save", async function(next) {
+userSchema.pre("save", async function (next) {
   try {
     if (!this.isModified("password")) {
       return next();
